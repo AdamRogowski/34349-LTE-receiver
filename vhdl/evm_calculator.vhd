@@ -9,6 +9,7 @@ entity evm_calculator is
     -- max number of symbols to calculate average EVM
     constant TOTAL_TO_AVG     : natural := 2048);
   port (clk            : in  std_logic;
+        reset            : in  std_logic;
         enable         : in  std_logic;
         input_symbol   : in  complex;
         evm            : out real;
@@ -26,7 +27,12 @@ begin
     variable single_evm   : real := 0.0;
   begin
     if rising_edge(clk) then
-      if enable = '1' then
+      if reset = '1' then
+        evm_sum <= 0.0; -- reset the sum after calculating average
+        counter <= 0; -- reset the counter
+	evm <= 0.0;
+	avg_evm <= 0.0;
+      elsif enable = '1' then
         ref_symbol := find_closest_symbol_16_qam(input_symbol);
         error_vector := subtract_complex(input_symbol, ref_symbol);
 	-- evm in %
@@ -37,7 +43,7 @@ begin
         counter <= counter + 1;
       end if;
 	if counter /= 0 then
-	  -- currently avg calculated for every new single_evm on the fly
+	  -- avg calculated for every new single_evm on the fly
 	  -- to constrain resource usage avg_evm can be assigned only once when counter = TOTAL_TO_AVG
 	  avg_evm <= evm_sum / real(counter);
 	elsif counter = TOTAL_TO_AVG then

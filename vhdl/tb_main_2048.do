@@ -9,6 +9,6 @@ add wave -radix Sfixed data_out
 add wave -radix Sfixed out_arr
 add wave ena
 add wave evm
-add wave avr_evm
+add wave avg_evm
 add wave out_rdy
 run 10 us

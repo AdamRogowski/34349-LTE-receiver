@@ -9,6 +9,7 @@ end entity;
 architecture Behavioral of evm_calculator_tb is
   constant TOTAL_TO_AVG : integer := 4;
   signal clk          : std_logic := '0';
+  signal rst          : std_logic := '0';
   signal enable       : std_logic := '0';
   signal input_sumbol : complex;
   signal EVM          : real;
@@ -26,6 +27,7 @@ begin
     generic map (TOTAL_TO_AVG)
     port map (
       clk          => clk,
+      reset          => rst,
       enable       => enable,
       input_symbol => input_sumbol,
       EVM          => EVM,
@@ -54,6 +56,7 @@ begin
       wait for 20 ns;
     end loop;
     enable <= '0';
+    rst <= '1';
     wait;
   end process;
 end architecture;
