@@ -7,85 +7,29 @@ entity evm_calculator_tb is
 end entity;
 
 architecture Behavioral of evm_calculator_tb is
+  constant TOTAL_TO_AVG : integer := 4;
   signal clk          : std_logic := '0';
   signal enable       : std_logic := '0';
   signal input_sumbol : complex;
   signal EVM          : real;
+  signal avg_EVM      : real;
 
   -- Test symbols
-  constant test_symbols : complex_array(0 to 63) := (
-    to_complex(3.000000000000, - 3.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(- 1.000000000000, 1.000000000000),
-    to_complex(- 1.000000000000, 1.000000000000),
-    to_complex(1.000000000000, - 3.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(3.000000000000, - 1.000000000000),
-    to_complex(- 3.000000000000, - 3.000000000000),
-    to_complex(- 3.000000000000, 1.000000000000),
-    to_complex(- 3.000000000000, - 1.000000000000),
-    to_complex(3.000000000000, 3.000000000000),
-    to_complex(3.000000000000, - 3.000000000000),
-    to_complex(1.000000000000, - 1.000000000000),
-    to_complex(- 3.000000000000, 3.000000000000),
-    to_complex(- 3.000000000000, - 3.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(- 1.000000000000, 1.000000000000),
-    to_complex(- 3.000000000000, 1.000000000000),
-    to_complex(1.000000000000, 3.000000000000),
-    to_complex(- 1.000000000000, - 3.000000000000),
-    to_complex(3.000000000000, - 3.000000000000),
-    to_complex(3.000000000000, 1.000000000000),
-    to_complex(- 3.000000000000, 3.000000000000),
-    to_complex(3.000000000000, - 3.000000000000),
-    to_complex(- 1.000000000000, 1.000000000000),
-    to_complex(- 1.000000000000, 3.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(3.000000000000, 1.000000000000),
-    to_complex(1.000000000000, 3.000000000000),
-    to_complex(3.000000000000, 3.000000000000),
-    to_complex(- 3.000000000000, 3.000000000000),
-    to_complex(1.000000000000, 3.000000000000),
-    to_complex(- 1.000000000000, 3.000000000000),
-    to_complex(1.000000000000, 1.000000000000),
-    to_complex(3.000000000000, - 1.000000000000),
-    to_complex(3.000000000000, 1.000000000000),
-    to_complex(- 1.000000000000, - 3.000000000000),
-    to_complex(- 3.000000000000, 1.000000000000),
-    to_complex(1.000000000000, - 1.000000000000),
-    to_complex(3.000000000000, - 3.000000000000),
-    to_complex(- 3.000000000000, - 1.000000000000),
-    to_complex(- 3.000000000000, 1.000000000000),
-    to_complex(- 3.000000000000, - 1.000000000000),
-    to_complex(1.000000000000, - 3.000000000000),
-    to_complex(- 3.000000000000, - 1.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(1.000000000000, - 3.000000000000),
-    to_complex(- 3.000000000000, - 1.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(3.000000000000, 1.000000000000),
-    to_complex(3.000000000000, 1.000000000000),
-    to_complex(3.000000000000, - 3.000000000000),
-    to_complex(- 1.000000000000, 3.000000000000),
-    to_complex(- 1.000000000000, - 3.000000000000),
-    to_complex(1.000000000000, 3.000000000000),
-    to_complex(1.000000000000, - 3.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(- 1.000000000000, 3.000000000000),
-    to_complex(- 1.000000000000, - 1.000000000000),
-    to_complex(- 1.000000000000, 3.000000000000),
-    to_complex(- 1.000000000000, 3.000000000000),
-    to_complex(- 3.000000000000, - 3.000000000000),
-    to_complex(- 3.000000000000, - 3.000000000000));
+  constant test_symbols : complex_array(0 to 3) := (
+    to_complex(1.500000000000, - 1.500000000000),
+    to_complex(- 3.500000000000, - 3.500000000000),
+    to_complex(1.500000000000, - 0.500000000000),
+    to_complex(- 3.500000000000, - 3.500000000000));
 begin
   -- Instantiate the unit under test
   uut: entity work.evm_calculator
+    generic map (TOTAL_TO_AVG)
     port map (
       clk          => clk,
       enable       => enable,
       input_symbol => input_sumbol,
-      EVM          => EVM
+      EVM          => EVM,
+      avg_EVM      => avg_EVM
     );
 
   -- Clock process
@@ -109,6 +53,7 @@ begin
       input_sumbol <= test_symbols(i);
       wait for 20 ns;
     end loop;
+    enable <= '0';
     wait;
   end process;
 end architecture;

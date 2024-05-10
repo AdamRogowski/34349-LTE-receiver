@@ -28,6 +28,7 @@ architecture Behavioral of main_tb is
   signal out_arr : complex_array(0 to FFT_SIZE - 1);
 
   signal evm : real;
+  signal avr_evm : real;
 
 begin
 
@@ -36,7 +37,8 @@ begin
     port map (clk => clk, reset => rst, enable => ena, input_symbol => data_in, output_symbol => data_out, output_ready => out_rdy);
 
   evm_calc: entity work.evm_calculator
-    port map (Clk => clk, enable => out_rdy, input_symbol => data_out, evm => evm);
+    generic map (FFT_SIZE)
+    port map (clk => clk, enable => out_rdy, input_symbol => data_out, evm => evm, avg_EVM => avr_evm);
 
   clock_process: process
   begin
