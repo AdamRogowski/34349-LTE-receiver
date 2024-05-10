@@ -1,7 +1,6 @@
 library IEEE;
   use IEEE.STD_LOGIC_1164.all;
   use work.complex_pkg.all;
-  use work.constants.all;
   use work.twiddle_values.all;
 
 entity stage is
