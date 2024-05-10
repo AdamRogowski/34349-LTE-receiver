@@ -29,6 +29,7 @@ begin
       if enable = '1' then
         ref_symbol := find_closest_symbol_16_qam(input_symbol);
         error_vector := subtract_complex(input_symbol, ref_symbol);
+	-- evm in %
         single_evm := magnitude(error_vector) / magnitude(ref_symbol) * 100.0;
 	evm <= single_evm;
 	
@@ -36,6 +37,8 @@ begin
         counter <= counter + 1;
       end if;
 	if counter /= 0 then
+	  -- currently avg calculated for every new single_evm on the fly
+	  -- to constrain resource usage avg_evm can be assigned only once when counter = TOTAL_TO_AVG
 	  avg_evm <= evm_sum / real(counter);
 	elsif counter = TOTAL_TO_AVG then
           evm_sum <= 0.0; -- reset the sum after calculating average

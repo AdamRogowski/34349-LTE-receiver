@@ -52,7 +52,7 @@ begin
   stimulus: process
   begin
     for i in 0 to FFT_SIZE - 1 loop
-      data_in <= INPUT_DATA_2048_16QAM_CLEAR(i);
+      data_in <= INPUT_DATA_2048_16QAM_NOISY(i);
       wait for CLK_PERIOD;
     end loop;
     wait;
