@@ -4,7 +4,7 @@ library IEEE;
   use work.complex_pkg.all;
   use work.utilities_pkg.all;
 
-entity fft is
+entity r2sdf is
   generic (FFT_SIZE : positive := 2048);
   port (clk           : in  std_logic;
         reset         : in  std_logic;
@@ -15,7 +15,7 @@ entity fft is
         output_ready  : out std_logic);
 end entity;
 
-architecture Behavioral of fft is
+architecture Behavioral of r2sdf is
 
   constant nr_of_stages : natural := log_2(FFT_SIZE);
   -- array representing the bus connecting interfaces of the stages

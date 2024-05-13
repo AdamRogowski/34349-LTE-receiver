@@ -5,8 +5,9 @@ library IEEE;
   use work.utilities_pkg.all;
   use work.input_data.all;
 
--- Test interaction between r2sdf module and EVM calculator
--- Generate EVM for 16QAM input data
+  -- Test interaction between r2sdf module and EVM calculator
+  -- Generate EVM for 16QAM input data
+
 entity main_tb is
 end entity;
 
@@ -27,12 +28,12 @@ architecture Behavioral of main_tb is
   -- register with the output symbols in reverse order
   signal out_arr : complex_array(0 to FFT_SIZE - 1);
 
-  signal evm : real;
+  signal evm     : real;
   signal avr_evm : real;
 
 begin
 
-  r2sdf: entity work.fft
+  r2sdf: entity work.r2sdf
     generic map (FFT_SIZE)
     port map (clk => clk, reset => rst, enable => ena, input_symbol => data_in, output_symbol => data_out, output_ready => out_rdy);
 
@@ -49,6 +50,7 @@ begin
   end process;
 
   -- Input symbol once every clock cycle
+
   stimulus: process
   begin
     for i in 0 to FFT_SIZE - 1 loop

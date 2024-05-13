@@ -7,25 +7,25 @@ library IEEE;
 
 entity analyser is
   generic (
-    FFT_SIZE   : integer := 2 ** 11
+    FFT_SIZE : integer := 2 ** 11
   );
   port (
-    clk       : in  std_logic;
-    rst       : in  std_logic;
-    ena       : in  std_logic;
-    data_in   : in  complex;
-    evm   : out real
+    clk     : in  std_logic;
+    rst     : in  std_logic;
+    ena     : in  std_logic;
+    data_in : in  complex;
+    evm     : out real
   );
 end entity;
 
 architecture Behavioral of analyser is
   signal data_out : complex;
-  signal out_rdy : std_logic := '0';
-  signal avg_evm : real;
+  signal out_rdy  : std_logic := '0';
+  signal avg_evm  : real;
 
 begin
 
-  r2sdf: entity work.fft
+  r2sdf: entity work.r2sdf
     generic map (FFT_SIZE)
     port map (clk => clk, reset => rst, enable => ena, input_symbol => data_in, output_symbol => data_out, output_ready => out_rdy);
 
