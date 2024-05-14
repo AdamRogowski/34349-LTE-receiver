@@ -2,6 +2,7 @@ library IEEE;
   use IEEE.STD_LOGIC_1164.all;
   use work.complex_pkg.all;
   use work.twiddle_values.all;
+  use work.test_constants.all;
 
 entity stage is
   generic (

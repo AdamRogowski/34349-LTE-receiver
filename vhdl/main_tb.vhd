@@ -4,6 +4,7 @@ library IEEE;
   use work.complex_pkg.all;
   use work.utilities_pkg.all;
   use work.input_data.all;
+  use work.test_constants.all;
 
   -- Test interaction between r2sdf module and EVM calculator
   -- Generate EVM for 16QAM input data
@@ -29,7 +30,7 @@ architecture Behavioral of main_tb is
   signal out_arr : complex_array(0 to FFT_SIZE - 1);
 
   signal evm     : real;
-  signal avr_evm : real;
+  signal avg_evm : real;
 
 begin
 
@@ -39,7 +40,7 @@ begin
 
   evm_calc: entity work.evm_calculator
     generic map (FFT_SIZE)
-    port map (clk => clk, reset => rst, enable => out_rdy, input_symbol => data_out, evm => evm, avg_EVM => avr_evm);
+    port map (clk => clk, reset => rst, enable => out_rdy, input_symbol => data_out, evm => evm, avg_EVM => avg_evm);
 
   clock_process: process
   begin

@@ -8,6 +8,7 @@ end entity;
 
 architecture Behavioral of evm_calculator_tb is
   constant TOTAL_TO_AVG : integer := 4;
+  constant CLK_PERIOD : time      := 2 ns;
   signal clk          : std_logic := '0';
   signal rst          : std_logic := '0';
   signal enable       : std_logic := '0';
@@ -27,7 +28,7 @@ begin
     generic map (TOTAL_TO_AVG)
     port map (
       clk          => clk,
-      reset          => rst,
+      reset        => rst,
       enable       => enable,
       input_symbol => input_sumbol,
       EVM          => EVM,
@@ -39,21 +40,21 @@ begin
   clk_process: process
   begin
     clk <= '0';
-    wait for 10 ns;
+    wait for CLK_PERIOD / 2;
     clk <= '1';
-    wait for 10 ns;
+    wait for CLK_PERIOD / 2;
   end process;
 
   -- Stimulus process
 
   stim_proc: process
   begin
-    wait for 20 ns;
+    wait for CLK_PERIOD;
     enable <= '1';
     -- Apply test vectors
     for i in test_symbols'range loop
       input_sumbol <= test_symbols(i);
-      wait for 20 ns;
+      wait for CLK_PERIOD;
     end loop;
     enable <= '0';
     rst <= '1';

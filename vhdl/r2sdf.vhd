@@ -86,6 +86,7 @@ begin
   stage7: entity work.stage
     generic map (FFT_SIZE, 2 ** 7)
     port map (clk, reset, enable, control_signal(6), stages_bus(7), stages_bus(6));
+  --stages_bus(6) <= input_symbol;
   stage6: entity work.stage
     generic map (FFT_SIZE, 2 ** 6)
     port map (clk, reset, enable, control_signal(5), stages_bus(6), stages_bus(5));
