@@ -7,7 +7,7 @@ library IEEE;
 
 entity analyser is
   generic (
-    FFT_SIZE : integer := 2 ** 11
+    FFT_SIZE : integer := 2048
   );
   port (
     clk     : in  std_logic;
@@ -19,9 +19,9 @@ entity analyser is
 end entity;
 
 architecture Behavioral of analyser is
-  signal data_out : complex;
+  signal data_out : complex   := to_complex(0.0, 0.0);
   signal out_rdy  : std_logic := '0';
-  signal avg_evm  : real;
+  signal avg_evm  : real      := 0.0;
 
 begin
 

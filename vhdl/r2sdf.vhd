@@ -69,6 +69,7 @@ begin
     end if;
   end process;
 
+  stages_bus(11) <= input_symbol;
   -- instantiate stages, where output of the previous stage is input of the next stage
   stage11: entity work.stage
     generic map (FFT_SIZE, 2 ** 11)
@@ -104,7 +105,6 @@ begin
     generic map (FFT_SIZE, 2 ** 1)
     port map (clk, reset, enable, control_signal(0), stages_bus(1), stages_bus(0));
 
-  stages_bus(11) <= input_symbol;
-  output_symbol  <= stages_bus(0);
+  output_symbol <= stages_bus(0);
 
 end architecture;
