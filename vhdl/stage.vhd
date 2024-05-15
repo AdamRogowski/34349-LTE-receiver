@@ -57,8 +57,8 @@ begin
         --       For the third stage the twiddle_index is incremented by 4,
         --       and so on to to get correct twiddle factor index for smaller stages
         twiddle_counter := twiddle_index + 1 * MAX_STAGE_SIZE / CURRENT_STAGE_SIZE;
-        -- reset twiddle_counter if it reaches MAX_STAGE_SIZE
-        if twiddle_counter = MAX_STAGE_SIZE then
+        -- reset twiddle_counter if it reaches half of the MAX_STAGE_SIZE
+        if twiddle_counter = MAX_STAGE_SIZE / 2 then
           twiddle_counter := 0;
         end if;
         twiddle_index <= twiddle_counter;
